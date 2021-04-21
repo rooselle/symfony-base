@@ -1,0 +1,41 @@
+version: '3.5'
+
+services:
+    apache_php:
+        build: .docker/apache_php
+        container_name: apache_php
+        ports:
+            - 80:80
+        volumes:
+            - .docker/config/vhosts:/etc/apache2/sites-enabled
+            - .:/var/www/html
+
+    db:
+        image: library/mysql:5.7
+        container_name: db
+        environment:
+            MYSQL_DATABASE: roselle
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: db
+            MYSQL_PASSWORD: db
+        ports:
+            - 3306:3306
+        volumes:
+            - .docker/data/mysql:/var/lib/mysql
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin
+        environment:
+            PMA_HOST: db
+            PMA_PORT: 8080
+            PMA_USER: root
+            PMA_PASSWORD: root
+        ports:
+            - 8080:80
+        depends_on:
+            - db
+
+    dockerize:
+        image: jwilder/dockerize
+        container_name: dockerize
