@@ -36,6 +36,25 @@ services:
         depends_on:
             - db
 
+    maildev:
+        image: maildev/maildev
+        container_name: maildev
+        command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
+        ports:
+            - 8090:80
+
     dockerize:
         image: jwilder/dockerize
         container_name: dockerize
+
+    blackfire:
+        image: blackfire/blackfire:2
+        container_name: blackfire
+        ports: ['8307']
+        environment:
+            BLACKFIRE_SERVER_ID: $BLACKFIRE_SERVER_ID
+            BLACKFIRE_SERVER_TOKEN: $BLACKFIRE_SERVER_TOKEN
+            BLACKFIRE_CLIENT_ID: $BLACKFIRE_CLIENT_ID
+            BLACKFIRE_CLIENT_TOKEN: $BLACKFIRE_CLIENT_TOKEN
+            BLACKFIRE_LOG_LEVEL: 4
+            BLACKFIRE_DISABLE_LEGACY_PORT: 1

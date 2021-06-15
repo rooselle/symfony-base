@@ -1,4 +1,9 @@
 parameters:
+    excludePaths:
+        - *.dist
+#    ignoreErrors:
+#        - '#Call to an undefined method Phake\\Proxies\\(Stubber|Verifier)Proxy::[a-zA-Z]+\(\)#'
+#        - '#Parameter \#[0-9]+ \$mock of static method Phake::(verify|when)\(\) expects [a-zA-Z0-9\\_]+, [a-zA-Z0-9\\_]+ given#'
     level: 8
     paths:
         - src

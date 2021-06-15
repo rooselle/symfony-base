@@ -7,6 +7,9 @@ ECHO                  = ${DOCKER_DIR}/bin/display-job-title
 NPM                   = $(EXEC_PHP_CONTAINER) npm
 SYMFONY               = $(EXEC_PHP_CONTAINER) bin/console
 
+FILES = .
+FILES_PHP = src tests
+
 ##
 ## Container
 ## ----
@@ -29,7 +32,7 @@ project-reinstall: project-remove project-install ## Destroy the dev environment
 
 dev-start: ## Start the dev environment
 	$(ECHO) "Starting docker"
-	$(DOCKER_COMPOSE) up -d --remove-orphans --no-recreate
+	$(DOCKER_COMPOSE) --env-file .env.local up -d --remove-orphans --no-recreate
 
 dev-stop: ## Stop the dev environment
 	$(ECHO) "Stopping docker"
@@ -73,27 +76,38 @@ assets-prod: ## Build the production version of the assets
 ## -------
 ##
 
-cs-fixer: php-cs-fixer ## Apply php-cs-fixer
+cs-fixer: ## Apply php-cs-fixer
 	$(ECHO) "Running php-cs-fixer"
-	$(EXEC_PHP_CONTAINER) php php-cs-fixer fix --config=.php_cs.dist -v --using-cache=no
+	$(EXEC_PHP_CONTAINER) vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php -v --using-cache=no
 
 phpstan: ## Run phpstan
 	$(ECHO) "Running phpstan"
-	$(EXEC_PHP_CONTAINER) vendor/bin/phpstan analyse
+	$(EXEC_PHP_CONTAINER) vendor/bin/phpstan analyse $(FILES_PHP)
 
 prettier: ## Run prettier
 	$(ECHO) "Running Prettier"
-	$(EXEC_PHP_CONTAINER) npx prettier --write .
+	$(EXEC_PHP_CONTAINER) npx prettier --write $(FILES)
+
+quality: cs-fixer phpstan prettier-check ## Shortcut for main quality commands
 
 prettier-check: ## Check if files are formatted by Prettier
 	$(ECHO) "Checking files with Prettier"
-	$(EXEC_PHP_CONTAINER) npx prettier --check .
+	$(EXEC_PHP_CONTAINER) npx prettier --check $(FILES)
 
 phpunit: ## Run unit tests
 	$(ECHO) "Running tests"
-	$(EXEC_PHP_CONTAINER) vendor/bin/phpunit
+	$(EXEC_PHP_CONTAINER) bin/phpunit
 
-quality: cs-fixer phpstan prettier-check ## Shortcut for all quality commands
+phpunit-report: ## Run unit tests and generate code coverage report in HTML
+	$(ECHO) "Running tests and generating code coverage report"
+	$(EXEC_PHP_CONTAINER) bin/phpunit --coverage-html tests/report
+
+browserslist: ## Update Browser Data
+	$(ECHO) "Updating Browser Data"
+	$(EXEC_PHP_CONTAINER) npx browserslist@latest --update-db
+
+composer-unused: ## Run composer-unused to check for unused packages
+	$(EXEC_PHP_CONTAINER) php composer-unused.phar
 
 ##
 ## Debug
@@ -118,6 +132,10 @@ composer-install:
 	$(ECHO) "Installing Symfony vendors"
 	$(EXEC_PHP_CONTAINER) composer install
 
+download-composer-unused:
+	$(ECHO) "Downloading composer-unused"
+	$(EXEC_PHP_CONTAINER) curl -JOL https://github.com/icanhazstring/composer-unused/releases/latest/download/composer-unused.phar
+
 docker-build:
 	$(ECHO) "Building docker"
 	$(DOCKER_COMPOSE) build --pull
@@ -126,10 +144,6 @@ docker-kill:
 	$(ECHO) "Killing docker"
 	$(DOCKER_COMPOSE) kill
 	$(DOCKER_COMPOSE) down --volumes --remove-orphans
-
-php-cs-fixer:
-	$(ECHO) "Downloading php-cs-fixer"
-	$(EXEC_PHP_CONTAINER) curl -L http://cs.sensiolabs.org/download/php-cs-fixer-v2.phar -o php-cs-fixer
 
 wait-for-db:
 	$(ECHO) "Waiting for db"
