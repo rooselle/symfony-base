@@ -1,3 +1,3 @@
-# Roselle
+# Symfony base
 
-This is the repository of my professional website.
+This is the base I use when I develop a new website in Symfony.
