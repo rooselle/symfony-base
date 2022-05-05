@@ -5,6 +5,7 @@
     "autoprefixer": "^10.2.5",
     "core-js": "^3.0.0",
     "postcss-loader": "^5.2.0",
+    "prettier": "2.6.2",
     "purgecss": "^4.0.3",
     "regenerator-runtime": "^0.13.2",
     "sass": "^1.32.12",
@@ -21,6 +22,6 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.6.0",
-    "bootstrap": "^5.0.0-beta1"
+    "bootstrap": "^5.0"
   }
 }
