@@ -1,0 +1,82 @@
+body {
+  font-size: 1.125rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex-grow: 1;
+}
+
+::selection {
+  color: $white;
+  background-color: $dark;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:focus-visible:not(.navbar-brand, .nav-link, .btn) {
+  color: $white;
+  background-color: $secondary;
+  text-decoration: none;
+  padding: map-get($spacers, 1) 0;
+}
+
+.bg-dark {
+  background-color: $dark !important;
+
+  & ::selection {
+    color: $dark;
+    background-color: $white;
+  }
+}
+
+.form-control {
+  border-color: $gray-500;
+
+  &:focus {
+    box-shadow: none;
+    border-color: $gray-800;
+  }
+}
+
+.form-group {
+  margin-bottom: map-get($spacers, 4);
+
+  ul {
+    margin-top: map-get($spacers, 2);
+    margin-bottom: 0;
+    padding-left: 0;
+  }
+
+  li {
+    list-style: none;
+    color: $warning;
+    background-color: $white;
+
+    &:not(:last-child) {
+      margin-bottom: map-get($spacers, 2);
+    }
+  }
+}
+
+.navbar-brand img {
+  margin-right: map-get($spacers, 2);
+}
+
+.text-white a {
+  color: $white;
+  background-color: $dark;
+
+  &:hover {
+    color: $white !important;
+  }
+
+  &:focus-visible {
+    color: $dark !important;
+    background-color: $white;
+  }
+}

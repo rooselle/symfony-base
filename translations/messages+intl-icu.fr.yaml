@@ -1,4 +1,3 @@
-head_title.default: Welcome
-website:
-    description:
-    name: Website
+Welcome: Bienvenue
+Website name: Nom du site
+Website description: Description du site

@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="{{ 'website.name'|trans }} | {% block description %}{{ 'website.description'|trans }}{% endblock %}" />
+    <meta name="description" content="{{ 'Website name'|trans }} | {% block description %}{{ 'Website description'|trans }}{% endblock %}" />
 
     <link rel="shortcut icon" type="image/png" href="{{ asset('favicon.png') }}">
 
-    <title>{% block title %}{{ 'head_title.default'|trans }}{% endblock %} | {{ 'website.name'|trans }}</title>
+    {% block extra_meta %}{% endblock extra_meta %}
+
+    <title>{% block title %}{{ 'Welcome'|trans }}{% endblock %} | {{ 'Website name'|trans }}</title>
 
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}

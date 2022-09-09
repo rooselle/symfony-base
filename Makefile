@@ -43,7 +43,7 @@ dev-stop: ## Stop the dev environment
 ## ----
 ##
 
-db-reset: wait-for-db ## Reset Symfony database with default data
+db-reset: ## Reset Symfony database with default data
 	$(ECHO) "Loading Symfony database"
 	$(SYMFONY) doctrine:database:drop --force --if-exists
 	$(SYMFONY) doctrine:database:create

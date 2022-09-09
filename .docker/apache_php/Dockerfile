@@ -13,6 +13,10 @@ RUN npm install --location=global npm
 # Install PCOV extension for code coverage
 RUN pecl install pcov && docker-php-ext-enable pcov
 
+# Install PGSQL
+RUN apt-get install -y libpq-dev
+RUN docker-php-ext-install pdo_pgsql pgsql
+
 # Install Blackfire
 RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
     && architecture=$(case $(uname -m) in i386 | i686 | x86) echo "i386" ;; x86_64 | amd64) echo "amd64" ;; aarch64 | arm64 | armv8) echo "arm64" ;; *) echo "amd64" ;; esac) \

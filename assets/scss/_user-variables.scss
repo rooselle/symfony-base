@@ -1,0 +1,30 @@
+$gray-100: #e8fed9 !default;
+$gray-200: #cff0c1 !default;
+$gray-300: #9bc59d !default;
+$gray-500: #658f79 !default;
+$gray-600: #2e5955 !default;
+$gray-800: #213d42 !default;
+$gray-900: #1d2e34 !default;
+$black: #181e25 !default;
+
+$primary-dark: #29521c !default;
+$primary: #2d591e !default;
+$primary-light: #326322 !default;
+$success: #00634e !default;
+$info: #005e8a !default;
+$warning: #8a4601 !default;
+$danger: #a22a01 !default;
+$light: $gray-100 !default;
+$dark: $gray-900 !default;
+
+$body-color: $gray-900 !default;
+
+$spacer: 1rem !default;
+$spacers: (
+  0: 0,
+  1: $spacer * 0.25,
+  2: $spacer * 0.5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 2.5,
+) !default;
