@@ -22,19 +22,44 @@
         "conditions": []
       },
       {
-        "action": "make cs-fixer FILES_PHP='{$STAGED_FILES}'",
+        "action": "make cs-fixer FILES_PHP='{$STAGED_FILES|of-type:php}'",
         "options": [],
-        "conditions": []
+        "conditions": [
+          {
+            "exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
+            "args": ["php"]
+          }
+        ]
       },
       {
-        "action": "make phpstan FILES_PHP='{$STAGED_FILES}'",
+        "action": "make phpstan FILES_PHP='{$STAGED_FILES|of-type:php}'",
         "options": [],
-        "conditions": []
+        "conditions": [
+          {
+            "exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
+            "args": ["php"]
+          }
+        ]
       },
       {
-        "action": "make prettier-check FILES='{$STAGED_FILES}'",
+        "action": "make prettier-check FILES='{$STAGED_FILES|of-type:js|of-type:scss|of-type:yaml|of-type:json}'",
         "options": [],
-        "conditions": []
+        "conditions": [
+          {
+            "exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\Any",
+            "args": [["*.js", "*json", "*.scss", "*.yaml"]]
+          }
+        ]
+      },
+      {
+        "action": "make lint-twig FILES='{$STAGED_FILES|of-type:twig}'",
+        "options": [],
+        "conditions": [
+          {
+            "exec": "\\CaptainHook\\App\\Hook\\Condition\\FileStaged\\OfType",
+            "args": ["twig"]
+          }
+        ]
       }
     ]
   },

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ $# -eq 0 ]; then
-    docker exec -it apache_php bash
+    docker exec -it base_apache_php bash
 else
-    docker exec apache_php bash -c "$*"
+    docker exec base_apache_php bash -c "$*"
 fi
