@@ -88,6 +88,10 @@ prettier: ## Run prettier
 	$(ECHO) "Running Prettier"
 	$(EXEC_PHP_CONTAINER) npx prettier --write $(FILES)
 
+lint-twig: ## Run Twig linter
+	$(ECHO) "Running Twig linter"
+	$(SYMFONY) lint:twig --show-deprecations $(FILES)
+
 quality: cs-fixer phpstan prettier-check ## Shortcut for main quality commands
 
 prettier-check: ## Check if files are formatted by Prettier
@@ -134,6 +138,7 @@ composer-install:
 
 download-composer-unused:
 	$(ECHO) "Downloading composer-unused"
+	$(EXEC_PHP_CONTAINER) rm -f composer-unused.phar
 	$(EXEC_PHP_CONTAINER) curl -JOL https://github.com/icanhazstring/composer-unused/releases/latest/download/composer-unused.phar
 
 docker-build:

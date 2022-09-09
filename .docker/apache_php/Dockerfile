@@ -1,4 +1,6 @@
-FROM lavoweb/php-8.0:latest
+FROM lavoweb/php-8.1:latest
+
+RUN apt-get -y install git
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -6,6 +8,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Install Node.js (& npm)
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get install -y nodejs
+RUN npm install --location=global npm
 
 # Install PCOV extension for code coverage
 RUN pecl install pcov && docker-php-ext-enable pcov

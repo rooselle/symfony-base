@@ -3,53 +3,36 @@ version: '3.5'
 services:
     apache_php:
         build: .docker/apache_php
-        container_name: apache_php
+        container_name: base_apache_php
         ports:
-            - 80:80
+            - '80:80'
         volumes:
             - .docker/config/vhosts:/etc/apache2/sites-enabled
             - .:/var/www/html
 
     db:
-        image: library/mysql:5.7
-        container_name: db
+        image: postgres:14.5
+        container_name: base_db
         environment:
-            MYSQL_DATABASE: roselle
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_USER: db
-            MYSQL_PASSWORD: db
+            POSTGRES_DB: database
+            PGPASSWORD: root
+            POSTGRES_USER: db
+            POSTGRES_PASSWORD: db
         ports:
-            - 3306:3306
+            - '5432:5432'
         volumes:
-            - .docker/data/mysql:/var/lib/mysql
-
-    phpmyadmin:
-        image: phpmyadmin/phpmyadmin
-        container_name: phpmyadmin
-        environment:
-            PMA_HOST: db
-            PMA_PORT: 8080
-            PMA_USER: root
-            PMA_PASSWORD: root
-        ports:
-            - 8080:80
-        depends_on:
-            - db
+            - .docker/data/postgresql:/var/lib/postgresql/data
 
     maildev:
         image: maildev/maildev
-        container_name: maildev
+        container_name: base_maildev
         command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
         ports:
-            - 8090:80
-
-    dockerize:
-        image: jwilder/dockerize
-        container_name: dockerize
+            - '8090:80'
 
     blackfire:
         image: blackfire/blackfire:2
-        container_name: blackfire
+        container_name: base_blackfire
         ports: ['8307']
         environment:
             BLACKFIRE_SERVER_ID: $BLACKFIRE_SERVER_ID
