@@ -3,7 +3,7 @@
     "@fullhuman/postcss-purgecss": "^4.1",
     "@symfony/webpack-encore": "^1.8",
     "autoprefixer": "^10.4",
-    "core-js": "^3.21",
+    "core-js": "^3.23",
     "postcss-loader": "^6.2",
     "prettier": "2.6",
     "purgecss": "^4.1",
