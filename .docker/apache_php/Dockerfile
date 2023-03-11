@@ -1,7 +1,4 @@
-FROM lavoweb/php-8.2:latest
-
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+FROM lavoweb/php-8.2:composer
 
 # Install Node.js (& npm)
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
